@@ -1,410 +1,273 @@
-<title>BeaconAnalytics for MSPs</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;1,400&display=swap">
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSP Partner Program | Beacon Analytics</title>
+<meta name="description" content="Expand your security offering, protect more clients, and grow recurring revenue. BeaconAnalytics is built for the way MSPs work.">
+<link rel="canonical" href="https://www.beaconanalytics.co/msps.html">
+<meta name="theme-color" content="#06111e">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
 <style>
-/* ── Tokens: dark-first, amber beacon accent on deep navy ── */
-:root {
-  --bg:          #04070e;
-  --surface:     #0b1221;
-  --surface-2:   #101828;
-  --accent:      #f59e0b;
-  --accent-dim:  rgba(245,158,11,0.10);
-  --accent-glow: rgba(245,158,11,0.22);
-  --fg:          #f1f5f9;
-  --fg-muted:    #7d94b5;
-  --border:      rgba(255,255,255,0.07);
-  --radius:      12px;
-  color-scheme: dark;
-}
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg:          #f8fafc;
-    --surface:     #ffffff;
-    --surface-2:   #f1f5f9;
-    --accent:      #c77c06;
-    --accent-dim:  rgba(199,124,6,0.09);
-    --accent-glow: rgba(199,124,6,0.18);
-    --fg:          #0f172a;
-    --fg-muted:    #5e738a;
-    --border:      rgba(0,0,0,0.08);
-    color-scheme: light;
-  }
-}
-:root[data-theme="light"] {
-  --bg:          #f8fafc;
-  --surface:     #ffffff;
-  --surface-2:   #f1f5f9;
-  --accent:      #c77c06;
-  --accent-dim:  rgba(199,124,6,0.09);
-  --accent-glow: rgba(199,124,6,0.18);
-  --fg:          #0f172a;
-  --fg-muted:    #5e738a;
-  --border:      rgba(0,0,0,0.08);
-  color-scheme: light;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.65;
-  padding-left: max(16px, env(safe-area-inset-left,0px));
-  padding-right: max(16px, env(safe-area-inset-right,0px));
-}
-
-h1,h2,h3 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  text-wrap: balance;
-  line-height: 1.15;
-}
-
-/* ── Shared layout ── */
-.inner { max-width: 1080px; margin: 0 auto; }
-section { padding-block: 5rem; }
-
-/* ── Nav ── */
-body::before {
-  content:""; position:fixed; inset:0 0 auto;
-  height: env(safe-area-inset-top,0px); z-index:110;
-  background: rgba(4,7,14,0.92);
-}
-nav {
-  position: sticky;
-  top: env(safe-area-inset-top,0px);
-  z-index: 100;
-  background: rgba(4,7,14,0.88);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner {
-  max-width: 1080px; margin: 0 auto;
-  height: 60px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.logo {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700; font-size: 1rem;
-  color: var(--fg);
-  display: flex; align-items: center; gap: 9px;
-  text-decoration: none;
-}
-.beacon-logo {
-  position: relative; width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-}
-.b-core { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
-.b-ring {
-  position: absolute; border-radius: 50%;
-  border: 1px solid var(--accent); opacity: 0.35;
-}
-.nav-link {
-  font-size: 0.875rem; color: var(--fg-muted);
-  text-decoration: none; transition: color .2s;
-}
-.nav-link:hover { color: var(--fg); }
-.nav-links { display: flex; gap: 2rem; align-items: center; }
-.btn-sm {
-  background: var(--accent); color: #000;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 600; font-size: 0.82rem;
-  padding: 7px 16px; border-radius: 6px;
-  text-decoration: none; transition: opacity .2s;
-}
-.btn-sm:hover { opacity: 0.85; }
-
-/* ── Hero ── */
-.hero {
-  margin-top: calc(-1 * env(safe-area-inset-top,0px));
-  padding-top: calc(env(safe-area-inset-top,0px) + 7rem);
-  padding-bottom: 7rem;
+/* ── MSP page overrides & standalone styles ── */
+.msp-hero {
+  padding-block: 7rem 6rem;
   text-align: center;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
 }
-/* Beacon pulse rings — the aesthetic risk */
-.radar {
+.msp-radar {
   position: absolute; top: 48%; left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none; width: 700px; height: 700px;
 }
-.r-ring {
+.msp-ring {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
   border-radius: 50%;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--accent, #f59e0b);
   opacity: 0;
-  animation: radar-out 4s ease-out infinite;
+  animation: msp-pulse 4s ease-out infinite;
 }
-.r-ring:nth-child(1) { width:100px;height:100px; animation-delay: 0s; }
-.r-ring:nth-child(2) { width:220px;height:220px; animation-delay: .8s; }
-.r-ring:nth-child(3) { width:380px;height:380px; animation-delay: 1.6s; }
-.r-ring:nth-child(4) { width:580px;height:580px; animation-delay: 2.4s; }
-@keyframes radar-out {
-  0%   { opacity: .6; transform: translate(-50%,-50%) scale(.85); }
+.msp-ring:nth-child(1) { width:100px; height:100px; animation-delay: 0s; }
+.msp-ring:nth-child(2) { width:220px; height:220px; animation-delay: .8s; }
+.msp-ring:nth-child(3) { width:380px; height:380px; animation-delay: 1.6s; }
+.msp-ring:nth-child(4) { width:580px; height:580px; animation-delay: 2.4s; }
+@keyframes msp-pulse {
+  0%   { opacity: .5; transform: translate(-50%,-50%) scale(.85); }
   100% { opacity: 0;  transform: translate(-50%,-50%) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .r-ring { animation: none; opacity: .05; }
+  .msp-ring { animation: none; opacity: .05; }
 }
 
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-size: 0.72rem; font-weight: 600;
+.msp-hero .wrap { position: relative; }
+.msp-hero .eyebrow { margin-bottom: 1.5rem; }
+.msp-hero h1 {
+  font-size: clamp(2.2rem, 5.5vw, 3.75rem);
+  margin-bottom: 1.25rem;
+  max-width: 820px;
+}
+.msp-hero h1 em { font-style: normal; color: var(--accent, #f59e0b); }
+.msp-hero p {
+  font-size: 1.1rem;
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+  color: var(--fg-muted, #94a3b8);
+}
+
+/* ── Shared section helpers ── */
+.msp-section { padding-block: 5rem; }
+.msp-section-alt { background: var(--surface, #0c1322); border-top: 1px solid var(--border, rgba(255,255,255,.07)); border-bottom: 1px solid var(--border, rgba(255,255,255,.07)); }
+.msp-label {
+  font-size: .72rem; font-weight: 700;
   letter-spacing: .11em; text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid rgba(245,158,11,.25);
-  padding: 5px 14px; border-radius: 100px;
-  margin-bottom: 2rem;
-  position: relative;
+  color: var(--accent, #f59e0b); margin-bottom: .6rem;
 }
-.hero h1 {
-  font-size: clamp(2.1rem, 5.5vw, 3.8rem);
-  font-weight: 700; letter-spacing: -.025em;
-  max-width: 820px; margin: 0 auto 1.5rem;
-  position: relative;
+.msp-heading {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 700; letter-spacing: -.02em;
+  margin-bottom: .9rem; text-wrap: balance;
 }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero-lead {
-  font-size: 1.1rem; color: var(--fg-muted);
-  max-width: 540px; margin: 0 auto 2.75rem;
-  position: relative;
+.msp-sub {
+  font-size: 1rem; color: var(--fg-muted, #94a3b8);
+  max-width: 580px; margin-bottom: 3rem;
 }
-.hero-btns {
-  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-  position: relative;
-}
-.btn-primary {
-  background: var(--accent); color: #000;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 600; font-size: .95rem;
-  padding: 13px 28px; border-radius: 8px;
-  text-decoration: none; transition: opacity .18s, transform .15s;
-}
-.btn-primary:hover { opacity: .86; transform: translateY(-1px); }
-.btn-ghost {
-  background: transparent; color: var(--fg);
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 500; font-size: .95rem;
-  padding: 13px 28px; border-radius: 8px;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  transition: border-color .18s, transform .15s;
-}
-.btn-ghost:hover { border-color: var(--fg-muted); transform: translateY(-1px); }
 
-/* ── Shared heading block ── */
-.sh { margin-bottom: 3rem; }
-.sh .label {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-size: .7rem; font-weight: 600;
-  letter-spacing: .11em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: .6rem;
-}
-.sh h2 {
-  font-size: clamp(1.55rem, 3vw, 2.3rem);
-  font-weight: 700; letter-spacing: -.02em; margin-bottom: .8rem;
-}
-.sh p { font-size: 1rem; color: var(--fg-muted); max-width: 580px; }
-
-/* ── Challenges ── */
-.challenges {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.ch-grid {
+/* ── Challenge cards ── */
+.msp-ch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
-  gap: 1px; background: var(--border);
-  border-radius: var(--radius); overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1px;
+  background: var(--border, rgba(255,255,255,.07));
+  border-radius: 12px; overflow: hidden;
 }
-.ch-card {
-  background: var(--surface); padding: 1.75rem 1.75rem 2rem;
+.msp-ch-card {
+  background: var(--surface, #0c1322);
+  padding: 1.75rem 1.75rem 2rem;
   transition: background .2s;
 }
-.ch-card:hover { background: var(--surface-2); }
-.ch-icon {
+.msp-ch-card:hover { background: var(--surface-alt, #111d30); }
+.msp-ch-icon {
   width: 38px; height: 38px; border-radius: 8px;
-  background: var(--accent-dim);
+  background: rgba(245,158,11,.1);
   display: flex; align-items: center; justify-content: center;
-  color: var(--accent); margin-bottom: .9rem;
+  color: var(--accent, #f59e0b); margin-bottom: .9rem;
 }
-.ch-card h3 {
-  font-size: .95rem; font-weight: 600; margin-bottom: .4rem;
-}
-.ch-card p { font-size: .875rem; color: var(--fg-muted); }
+.msp-ch-card h3 { font-size: .95rem; font-weight: 600; margin-bottom: .4rem; }
+.msp-ch-card p  { font-size: .875rem; color: var(--fg-muted, #94a3b8); }
 
-/* ── Solution ── */
-.solution-wrap {
+/* ── Solution layout ── */
+.msp-sol-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem; align-items: center;
 }
 @media (max-width: 680px) {
-  .solution-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .msp-sol-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
 }
-.sol-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+.msp-sol-card {
+  background: var(--surface, #0c1322);
+  border: 1px solid var(--border, rgba(255,255,255,.07));
   border-radius: 16px; padding: 2.25rem;
   position: relative; overflow: hidden;
 }
-.sol-card::before {
+.msp-sol-card::before {
   content:""; position:absolute; top:0; left:0; right:0; height:3px;
-  background: linear-gradient(90deg, var(--accent) 0%, transparent 70%);
+  background: linear-gradient(90deg, var(--accent, #f59e0b) 0%, transparent 70%);
 }
-.sol-steps { display: flex; flex-direction: column; gap: 1.6rem; }
-.sol-step { display: flex; gap: .9rem; align-items: flex-start; }
-.sol-num {
+.msp-steps { display: flex; flex-direction: column; gap: 1.6rem; }
+.msp-step  { display: flex; gap: .9rem; align-items: flex-start; }
+.msp-num {
   flex-shrink: 0; width: 26px; height: 26px; margin-top: 2px;
-  background: var(--accent); color: #000; border-radius: 50%;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: var(--accent, #f59e0b); color: #000; border-radius: 50%;
   font-weight: 700; font-size: .78rem;
   display: flex; align-items: center; justify-content: center;
 }
-.sol-step p { font-size: .9rem; color: var(--fg-muted); min-width: 0; }
-.sol-step p strong {
-  display: block; color: var(--fg); font-weight: 600;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+.msp-step p { font-size: .9rem; color: var(--fg-muted, #94a3b8); min-width: 0; }
+.msp-step p strong {
+  display: block; color: var(--fg, #f1f5f9); font-weight: 600;
   margin-bottom: 2px; font-size: .95rem;
 }
 
-/* ── Features ── */
-.features {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-}
-.feat-grid {
+/* ── Feature grid ── */
+.msp-feat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--border, rgba(255,255,255,.07));
+  border: 1px solid var(--border, rgba(255,255,255,.07));
+  border-radius: 12px; overflow: hidden;
 }
-.feat-card {
-  background: var(--surface); padding: 2rem 2rem 2.25rem;
+.msp-feat-card {
+  background: var(--surface, #0c1322);
+  padding: 2rem 2rem 2.25rem;
   transition: background .2s;
 }
-.feat-card:hover { background: var(--surface-2); }
-.feat-pill {
+.msp-feat-card:hover { background: var(--surface-alt, #111d30); }
+.msp-pill {
   display: inline-block;
-  font-size: .68rem; font-weight: 600;
+  font-size: .68rem; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
-  color: var(--accent); background: var(--accent-dim);
-  padding: 3px 10px; border-radius: 100px;
-  margin-bottom: .9rem;
+  color: var(--accent, #f59e0b); background: rgba(245,158,11,.1);
+  padding: 3px 10px; border-radius: 100px; margin-bottom: .9rem;
 }
-.feat-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
-.feat-card p  { font-size: .875rem; color: var(--fg-muted); line-height: 1.65; }
+.msp-feat-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+.msp-feat-card p  { font-size: .875rem; color: var(--fg-muted, #94a3b8); line-height: 1.65; }
 
-/* ── CTA ── */
-.cta-section { padding-block: 6rem; text-align: center; }
-.cta-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
+/* ── CTA box ── */
+.msp-cta-wrap {
+  padding-block: 6rem;
+  text-align: center;
+}
+.msp-cta-box {
+  background: var(--surface, #0c1322);
+  border: 1px solid var(--border, rgba(255,255,255,.07));
   border-radius: 20px; padding: 4rem 2rem;
   position: relative; overflow: hidden;
   max-width: 740px; margin: 0 auto;
 }
-.cta-box::before {
+.msp-cta-box::before {
   content:""; position:absolute; inset:0;
-  background: radial-gradient(ellipse at 50% -10%, var(--accent-dim) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% -10%, rgba(245,158,11,.08) 0%, transparent 65%);
   pointer-events: none;
 }
-.cta-box h2 {
+.msp-cta-box h2 {
   font-size: clamp(1.5rem, 3.5vw, 2.1rem);
   font-weight: 700; margin-bottom: .9rem; position: relative;
 }
-.cta-box p {
-  color: var(--fg-muted); margin-bottom: 2rem;
+.msp-cta-box p {
+  color: var(--fg-muted, #94a3b8); margin-bottom: 2rem;
   max-width: 460px; margin-left: auto; margin-right: auto;
   position: relative;
 }
-
-/* ── Footer ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding-block: 1.75rem;
-  text-align: center;
-  font-size: .82rem; color: var(--fg-muted);
-}
 </style>
+</head>
+<body class="msps">
 
-<!-- Nav -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="logo">
-      <div class="beacon-logo">
-        <div class="b-core"></div>
-        <div class="b-ring" style="width:14px;height:14px;"></div>
-        <div class="b-ring" style="width:22px;height:22px;opacity:.18;"></div>
-      </div>
-      BeaconAnalytics
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav-wrap">
+    <a href="index.html" class="brand" aria-label="Beacon Analytics home">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 4 35 33H5L20 4Z" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M20 14 28 29H12L20 14Z" fill="currentColor"/>
+        <path d="M20 1v5M3 12l5 3M37 12l-5 3" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span>beacon<span class="brand-light">analytics</span><sup>™</sup></span>
     </a>
-    <nav class="nav-links">
-      <a href="#challenges" class="nav-link">Challenges</a>
-      <a href="#platform" class="nav-link">Platform</a>
-      <a href="#contact" class="btn-sm">Partner with Us</a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">Menu <span>☰</span></button>
+    <nav id="primary-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="platform.html">Platform</a>
+      <a href="beaconai.html">BeaconAI</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="msps.html" aria-current="page">MSPs</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="resources.html">Resources</a>
+      <a class="button" href="contact.html">Request a demo<span aria-hidden="true">↗</span></a>
+      <button class="theme-toggle" aria-label="Switch color theme" title="Switch light and dark theme">◐</button>
     </nav>
   </div>
-</nav>
+</header>
+
+<main id="main">
 
 <!-- Hero -->
-<section class="hero">
-  <div class="radar" aria-hidden="true">
-    <div class="r-ring"></div>
-    <div class="r-ring"></div>
-    <div class="r-ring"></div>
-    <div class="r-ring"></div>
+<section class="msp-hero">
+  <div class="msp-radar" aria-hidden="true">
+    <div class="msp-ring"></div>
+    <div class="msp-ring"></div>
+    <div class="msp-ring"></div>
+    <div class="msp-ring"></div>
   </div>
-  <div class="inner">
-    <div class="eyebrow">MSP Partner Program</div>
+  <div class="wrap">
+    <div class="eyebrow"><span></span>MSP PARTNER PROGRAM</div>
     <h1>Security Services,<br><em>Built for the Way MSPs Work</em></h1>
-    <p class="hero-lead">Expand your security offering, protect more clients, and grow recurring revenue — without hiring a SOC team or rebuilding your stack.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary">Become a Partner</a>
-      <a href="#platform" class="btn-ghost">See the Platform</a>
+    <p>Expand your security offering, protect more clients, and grow recurring revenue — without hiring a SOC team or rebuilding your stack.</p>
+    <div class="actions">
+      <a class="button" href="contact.html">Become a Partner<span aria-hidden="true">↗</span></a>
+      <a class="button secondary" href="#platform">See the Platform<span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
 
 <!-- Challenges -->
-<section class="challenges" id="challenges">
-  <div class="inner">
-    <div class="sh">
-      <div class="label">The Landscape</div>
-      <h2>Today's MSPs Are Facing Real Challenges</h2>
-      <p>The demand for managed security has never been higher — but most tools weren't built for how MSPs actually operate.</p>
-    </div>
-    <div class="ch-grid">
-      <div class="ch-card">
-        <div class="ch-icon">
+<section class="msp-section msp-section-alt" id="challenges">
+  <div class="wrap">
+    <div class="msp-label">The Landscape</div>
+    <h2 class="msp-heading">Today's MSPs Are Facing Real Challenges</h2>
+    <p class="msp-sub">The demand for managed security has never been higher — but most tools weren't built for how MSPs actually operate.</p>
+    <div class="msp-ch-grid">
+      <div class="msp-ch-card">
+        <div class="msp-ch-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
         <h3>Rising Client Demand</h3>
         <p>Your clients expect stronger protection, clearer reporting, and faster answers — and that bar keeps rising.</p>
       </div>
-      <div class="ch-card">
-        <div class="ch-icon">
+      <div class="msp-ch-card">
+        <div class="msp-ch-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
         <h3>Complex Tools</h3>
         <p>Existing security tools are often complex, costly, and require specialist staff you don't have or can't afford.</p>
       </div>
-      <div class="ch-card">
-        <div class="ch-icon">
+      <div class="msp-ch-card">
+        <div class="msp-ch-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <h3>The SOC/SIEM Hurdle</h3>
         <p>Building your own SOC or implementing a SIEM feels out of reach in cost, time, and expertise required.</p>
       </div>
-      <div class="ch-card">
-        <div class="ch-icon">
+      <div class="msp-ch-card">
+        <div class="msp-ch-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         </div>
         <h3>Stricter Compliance</h3>
@@ -415,38 +278,27 @@ footer {
 </section>
 
 <!-- Solution -->
-<section id="solution">
-  <div class="inner">
-    <div class="solution-wrap">
+<section class="msp-section" id="solution">
+  <div class="wrap">
+    <div class="msp-sol-wrap">
       <div>
-        <div class="sh" style="margin-bottom:0;">
-          <div class="label">Your Path Forward</div>
-          <h2>The Simple, Fast Path to Becoming an MSSP</h2>
-          <p>BeaconAnalytics gives you everything you need to launch or expand your security practice — without the overhead that's held you back.</p>
-        </div>
+        <div class="msp-label">Your Path Forward</div>
+        <h2 class="msp-heading">The Simple, Fast Path to Becoming an MSSP</h2>
+        <p class="msp-sub" style="margin-bottom:0;">BeaconAnalytics gives you everything you need to launch or expand your security practice — without the overhead that's held you back.</p>
       </div>
-      <div class="sol-card">
-        <div class="sol-steps">
-          <div class="sol-step">
-            <div class="sol-num">1</div>
-            <p>
-              <strong>Launch on day one</strong>
-              A clean, secure, and scalable platform lets you immediately offer or expand security services without months of setup.
-            </p>
+      <div class="msp-sol-card">
+        <div class="msp-steps">
+          <div class="msp-step">
+            <div class="msp-num">1</div>
+            <p><strong>Launch on day one</strong>A clean, secure, and scalable platform lets you immediately offer or expand security services without months of setup.</p>
           </div>
-          <div class="sol-step">
-            <div class="sol-num">2</div>
-            <p>
-              <strong>No SOC or SIEM required</strong>
-              Skip expensive infrastructure. BeaconAnalytics handles detection, correlation, and triage so your team doesn't have to.
-            </p>
+          <div class="msp-step">
+            <div class="msp-num">2</div>
+            <p><strong>No SOC or SIEM required</strong>Skip expensive infrastructure. BeaconAnalytics handles detection, correlation, and triage so your team doesn't have to.</p>
           </div>
-          <div class="sol-step">
-            <div class="sol-num">3</div>
-            <p>
-              <strong>One platform, not twelve</strong>
-              Stop juggling disconnected vendor tools. Everything your technicians need is unified in a single place.
-            </p>
+          <div class="msp-step">
+            <div class="msp-num">3</div>
+            <p><strong>One platform, not twelve</strong>Stop juggling disconnected vendor tools. Everything your technicians need is unified in a single place.</p>
           </div>
         </div>
       </div>
@@ -455,41 +307,39 @@ footer {
 </section>
 
 <!-- Features -->
-<section class="features" id="platform">
-  <div class="inner">
-    <div class="sh">
-      <div class="label">Platform Capabilities</div>
-      <h2>The Only MSP Platform That Offers All of This</h2>
-      <p>Purpose-built for managed service providers — not retrofitted enterprise tools.</p>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-pill">Visibility</div>
+<section class="msp-section msp-section-alt" id="platform">
+  <div class="wrap">
+    <div class="msp-label">Platform Capabilities</div>
+    <h2 class="msp-heading">The Only MSP Platform That Offers All of This</h2>
+    <p class="msp-sub">Purpose-built for managed service providers — not retrofitted enterprise tools.</p>
+    <div class="msp-feat-grid">
+      <div class="msp-feat-card">
+        <div class="msp-pill">Visibility</div>
         <h3>Unified Dashboard</h3>
         <p>A single view across endpoints, alerts, vulnerabilities, and all your client environments — no deep security expertise required to operate it.</p>
       </div>
-      <div class="feat-card">
-        <div class="feat-pill">Intelligence</div>
+      <div class="msp-feat-card">
+        <div class="msp-pill">Intelligence</div>
         <h3>AI-Driven Triage</h3>
         <p>Automatic correlation, noise reduction, and smart prioritization help your technicians handle security incidents confidently and consistently.</p>
       </div>
-      <div class="feat-card">
-        <div class="feat-pill">Outcomes</div>
+      <div class="msp-feat-card">
+        <div class="msp-pill">Outcomes</div>
         <h3>Built-in Security</h3>
         <p>Deliver enterprise-grade security from day one with prebuilt playbooks, compliance-friendly reporting, and guided workflows.</p>
       </div>
-      <div class="feat-card">
-        <div class="feat-pill">Multi-Tenancy</div>
+      <div class="msp-feat-card">
+        <div class="msp-pill">Multi-Tenancy</div>
         <h3>Multi-Client Management</h3>
         <p>Purpose-built for MSP operations: secure segmentation, templated client onboarding, and unified reporting across your entire customer base.</p>
       </div>
-      <div class="feat-card">
-        <div class="feat-pill">Integration</div>
+      <div class="msp-feat-card">
+        <div class="msp-pill">Integration</div>
         <h3>RMM + Security, Together</h3>
         <p>Bring your existing RMM tools forward and layer modern security on top — without replacing what already works for your team.</p>
       </div>
-      <div class="feat-card">
-        <div class="feat-pill">Scale</div>
+      <div class="msp-feat-card">
+        <div class="msp-pill">Scale</div>
         <h3>Grow Without Headcount</h3>
         <p>Deliver the security your clients expect, profitably. Scale your practice without limits on a platform your team will find familiar from day one.</p>
       </div>
@@ -498,21 +348,60 @@ footer {
 </section>
 
 <!-- CTA -->
-<section class="cta-section" id="contact">
-  <div class="inner">
-    <div class="cta-box">
+<section class="msp-cta-wrap" id="contact">
+  <div class="wrap">
+    <div class="msp-cta-box">
+      <div class="msp-label">Make the Next Move</div>
       <h2>Ready to Expand Your Security Practice?</h2>
       <p>Join MSPs already using BeaconAnalytics to deliver stronger security, retain more clients, and grow recurring revenue.</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Talk to Our Team</a>
-        <a href="#platform" class="btn-ghost">Review the Platform</a>
+      <div class="actions">
+        <a class="button" href="contact.html">Talk to Our Team<span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="#platform">Review the Platform<span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer>
-  <div class="inner">
-    <p>&copy; 2026 BeaconAnalytics &mdash; Built for MSPs who want to grow.</p>
+  <div class="wrap footer-grid">
+    <div>
+      <a href="index.html" class="brand" aria-label="Beacon Analytics home">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M20 4 35 33H5L20 4Z" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M20 14 28 29H12L20 14Z" fill="currentColor"/>
+          <path d="M20 1v5M3 12l5 3M37 12l-5 3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>beacon<span class="brand-light">analytics</span><sup>™</sup></span>
+      </a>
+      <p>Security clarity.<br>Human advantage.</p>
+    </div>
+    <div>
+      <h2>Explore</h2>
+      <a href="platform.html">Platform</a>
+      <a href="beaconai.html">BeaconAI</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="msps.html">MSP Partners</a>
+    </div>
+    <div>
+      <h2>Connect</h2>
+      <a href="integrations.html">Integrations</a>
+      <a href="resources.html">Resources &amp; support</a>
+      <a href="contact.html">Request a demo</a>
+    </div>
+    <div>
+      <h2>Let's talk</h2>
+      <a href="mailto:sales@securityval.com">sales@securityval.com</a>
+      <a href="tel:+18889871335">+1 (888) 987-1335</a>
+      <a href="privacy.html">Website privacy</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 Beacon Analytics. All rights reserved.</span>
+    <span>CONNECTED INTELLIGENCE. INFORMED ACTION.</span>
   </div>
 </footer>
+
+</body>
+</html>
